@@ -1,0 +1,1 @@
+OK: KMP y Manacher coinciden con fuerza bruta (2000 casos)
