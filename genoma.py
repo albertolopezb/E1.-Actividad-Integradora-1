@@ -1,6 +1,6 @@
 """E1. Actividad Integradora 1 - Avance: puntos 1 (genes) y 2 (palindromos).
 
-Implementacion propia: KMP para busqueda de patrones y Manacher para el
+KMP para busqueda de patrones y Manacher para el
 palindromo mas largo. No se usan funciones de busqueda de la libreria estandar.
 """
 import os
