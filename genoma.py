@@ -16,33 +16,44 @@ def leer_secuencia(nombre):
         return "".join(l.strip() for l in f if not l.startswith(">")).upper()
 
 
-def tabla_fallo(p):
-    """Tabla de prefijos de KMP. O(m)."""
-    fallo = [0] * len(p)
-    k = 0
-    for i in range(1, len(p)):
-        while k and p[i] != p[k]:
-            k = fallo[k - 1]
-        if p[i] == p[k]:
-            k += 1
-        fallo[i] = k
-    return fallo
+def calcular_lps(patron):
+    """Arreglo LPS (longest prefix suffix) del patron. O(m)."""
+    m = len(patron)
+    lps = [0] * m
+    largo, i = 0, 1
+    while i < m:
+        if patron[i] == patron[largo]:
+            largo += 1
+            lps[i] = largo
+            i += 1
+        elif largo > 0:
+            largo = lps[largo - 1]
+        else:
+            lps[i] = 0
+            i += 1
+    return lps
 
 
 def kmp(texto, patron):
     """Todos los indices (base 0) donde aparece patron en texto. O(n+m)."""
-    if not patron:
+    n, m = len(texto), len(patron)
+    if m == 0:
         return []
-    fallo, k, res = tabla_fallo(patron), 0, []
-    for i, c in enumerate(texto):
-        while k and c != patron[k]:
-            k = fallo[k - 1]
-        if c == patron[k]:
-            k += 1
-        if k == len(patron):
-            res.append(i - k + 1)
-            k = fallo[k - 1]
-    return res
+    lps = calcular_lps(patron)
+    resultado = []
+    i = j = 0
+    while i < n:
+        if texto[i] == patron[j]:
+            i += 1
+            j += 1
+        elif j > 0:
+            j = lps[j - 1]
+        else:
+            i += 1
+        if j == m:
+            resultado.append(i - m)
+            j = lps[j - 1]
+    return resultado
 
 
 def palindromo_mas_largo(s):
