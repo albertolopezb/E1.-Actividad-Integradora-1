@@ -57,20 +57,26 @@ def kmp(texto, patron):
 
 
 def palindromo_mas_largo(s):
-    """Manacher: (inicio, longitud) del palindromo mas largo. O(n)."""
-    t = "#" + "#".join(s) + "#"
-    n = len(t)
-    p = [0] * n
-    centro = derecha = 0
-    for i in range(n):
-        if i < derecha:
-            p[i] = min(derecha - i, p[2 * centro - i])
-        while i - p[i] - 1 >= 0 and i + p[i] + 1 < n and t[i - p[i] - 1] == t[i + p[i] + 1]:
-            p[i] += 1
-        if i + p[i] > derecha:
-            centro, derecha = i, i + p[i]
-    r, c = max((v, i) for i, v in enumerate(p))
-    return (c - r) // 2, r
+    """Manacher (clase 10): (inicio, longitud) del palindromo mas largo. O(n)."""
+    # @ al inicio, # al final y $ entre caracteres: no pertenecen al alfabeto
+    texto = "@$" + "$".join(s) + "$#"
+    e = 2 * len(s) + 3
+    P = [0] * e
+    centro = limite = 0
+    for i in range(1, e - 1):
+        if i < limite:
+            simetrica = 2 * centro - i
+            P[i] = min(limite - i, P[simetrica])
+        gap = P[i] + 1
+        while texto[i - gap] == texto[i + gap]:
+            P[i] += 1
+            gap += 1
+        if i + P[i] > limite:
+            limite = i + P[i]
+            centro = i
+    max_indice = max(range(e), key=lambda k: P[k])
+    inicio = (max_indice - P[max_indice] - 1) // 2
+    return inicio, P[max_indice]
 
 
 def punto1(genoma, secuencias):
