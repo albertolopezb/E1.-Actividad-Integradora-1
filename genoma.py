@@ -74,7 +74,10 @@ def palindromo_mas_largo(s):
         if i + P[i] > limite:
             limite = i + P[i]
             centro = i
-    max_indice = max(range(e), key=lambda k: P[k])
+    max_indice = 0
+    for k in range(e):
+        if P[k] > P[max_indice]:
+            max_indice = k
     inicio = (max_indice - P[max_indice] - 1) // 2
     return inicio, P[max_indice]
 
