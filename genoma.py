@@ -57,7 +57,7 @@ def kmp(texto, patron):
 
 
 def palindromo_mas_largo(s):
-    """Manacher (clase 10): (inicio, longitud) del palindromo mas largo. O(n)."""
+    """Manacher: (inicio, longitud) del palindromo mas largo. O(n)."""
     # @ al inicio, # al final y $ entre caracteres: no pertenecen al alfabeto
     texto = "@$" + "$".join(s) + "$#"
     e = 2 * len(s) + 3
@@ -80,7 +80,7 @@ def palindromo_mas_largo(s):
 
 
 def punto1(genoma, secuencias):
-    print("=== Punto 1: indices de aparicion de cada gen en el genoma ===")
+    print("Punto 1: indices de aparicion de cada gen en el genoma: ")
     for nombre, gen in secuencias.items():
         idx = kmp(genoma, gen)
         rango = [(i + 1, i + len(gen)) for i in idx]  # 1-indexado, como NCBI
@@ -89,7 +89,7 @@ def punto1(genoma, secuencias):
 
 
 def punto2(secuencias):
-    print("\n=== Punto 2: palindromo mas largo por gen ===")
+    print("\nPunto 2: palindromo mas largo por gen: ")
     salida = []
     for nombre, gen in secuencias.items():
         ini, lon = palindromo_mas_largo(gen)

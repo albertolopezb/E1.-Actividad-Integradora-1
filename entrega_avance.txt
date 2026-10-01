@@ -1,0 +1,23 @@
+E1. Actividad Integradora 1 - Avance
+
+Repositorio: https://github.com/albertolopezb/E1.-Actividad-Integradora-1
+
+EVIDENCIA DEL AVANCE
+Se adjuntan capturas de pantalla de los resultados del programa y de los algoritmos utilizados (también disponibles en la carpeta "capturas" del repositorio).
+
+Algoritmos utilizados (implementación propia, sin funciones de librería que los resuelvan):
+- KMP (Knuth-Morris-Pratt), O(n + m): búsqueda de los genes M, S y ORF1AB dentro del genoma de Wuhan (Punto 1).
+- Manacher, O(n): palíndromo más largo de cada gen (Punto 2).
+- Pruebas: ambos algoritmos se validaron contra fuerza bruta con 2000 casos aleatorios, todos correctos.
+
+¿QUÉ YA COMPLETÉ?
+- Lectura automática de los archivos de secuencias (formato FASTA o texto plano).
+- Punto 1: índices de aparición de cada gen en el genoma SARS-COV-2-MN908947.3, mostrando nombre, índices y primeros 12 caracteres.
+- Punto 2: palíndromo más largo de cada gen (M, S y ORF1AB); se muestra su longitud y se guarda en el archivo palindromos.txt.
+- Pruebas de correctitud de KMP y Manacher.
+
+¿QUÉ FALTA?
+- Punto 3: encontrar en qué secciones del genoma se produce cada proteína (tabla de codones, traducción en los marcos de lectura, índices, primeros 4 aminoácidos y sus codones).
+- Punto 4: comparar el genoma de Wuhan 2019 contra el de Texas 2020 (índices con diferencias, codones y aminoácidos afectados, y la cadena más larga sin diferencias).
+- Reporte en PDF (con capturas, metodología, contribuciones individuales y bibliografía IEEE).
+- Video de aproximadamente 8 minutos con todo el equipo.
