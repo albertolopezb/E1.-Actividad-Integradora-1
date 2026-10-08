@@ -1,14 +1,14 @@
 Gen M
-longitud: 11
-posicion: 494-504
-palindromo: CTAAAGAAATC
+longitud: 10
+posicion: 311-320
+palindromo: CGCGTACGCG
 
 Gen S
-longitud: 15
-posicion: 2387-2401
-palindromo: ATTTTGGTGGTTTTA
+longitud: 16
+posicion: 1339-1354
+palindromo: GGTAATTATAATTACC
 
 Gen ORF1AB
 longitud: 20
-posicion: 9712-9731
-palindromo: CTCAATGACTTCAGTAACTC
+posicion: 5480-5499
+palindromo: ACACTGGTAATTACCAGTGT
