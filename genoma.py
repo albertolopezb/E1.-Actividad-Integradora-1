@@ -1,10 +1,11 @@
 
-"""E1. Actividad Integradora 1 - Puntos 1, 2 y 3.
+"""E1. Actividad Integradora 1 - Puntos 1, 2, 3 y 4.
 
 KMP para busqueda de genes y proteinas.
 Manacher adaptado para palindromos de ADN.
 Traduccion de codones y seis marcos de lectura.
 Cambio de reading frame en ORF1ab.
+Comparacion Wuhan vs Texas y subcadena comun mas larga (LCS).
 No se usan funciones de busqueda de la libreria estandar.
 """
 
@@ -12,6 +13,7 @@ import os
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 GENOMA_WUHAN = "SARS-COV-2-MN908947.3.txt"
+GENOMA_TEXAS = "SARS-COV-2-MT106054.1.txt"
 
 GENES = {
     "M": "gen-M.txt",
@@ -366,6 +368,126 @@ def punto3(genoma):
     )
 
 
+def ubicar_proteinas_directas(genoma):
+    """Ubica las proteinas del marco + (inicio y fin en base cero). O(n)."""
+    proteinas = leer_proteinas("seq-proteins.txt")
+    marcos = marcos_lectura(genoma)
+    ubicadas = {}
+
+    for nombre, proteina in proteinas.items():
+        for marco in ("+1", "+2", "+3"):
+            posiciones = kmp(marcos[marco], proteina)
+
+            if len(posiciones) > 0:
+                inicio = int(marco[1]) - 1 + posiciones[0] * 3
+                ubicadas[nombre] = (inicio, inicio + len(proteina) * 3)
+                break
+
+    return ubicadas
+
+
+def lcs_dp(a, b):
+    """Longest common substring con DP y dos arreglos (clase 09).
+
+    Devuelve (longitud, fin de la subcadena en a). O(n*m) tiempo, O(m) espacio.
+    Se usa en las pruebas; para los genomas completos (30,000 x 30,000) se usa
+    subcadena_comun_alineada, que explota que solo hay mutaciones puntuales.
+    """
+    prev = [0] * (len(b) + 1)
+    mejor = fin = 0
+
+    for i in range(1, len(a) + 1):
+        current = [0] * (len(b) + 1)
+
+        for j in range(1, len(b) + 1):
+            if a[i - 1] == b[j - 1]:
+                current[j] = prev[j - 1] + 1
+
+                if current[j] > mejor:
+                    mejor = current[j]
+                    fin = i
+
+        prev = current
+
+    return mejor, fin
+
+
+def diferencias(a, b):
+    """Indices (base cero) donde a y b difieren, comparando posicion a posicion."""
+    return [i for i in range(min(len(a), len(b))) if a[i] != b[i]]
+
+
+def subcadena_comun_alineada(a, b, difs):
+    """Cadena mas larga sin diferencias entre genomas alineados. O(n).
+
+    Si las cadenas solo difieren por sustituciones (misma posicion), la
+    subcadena comun mas larga es el tramo mas largo entre dos diferencias
+    consecutivas. Devuelve (inicio, longitud) en base cero.
+    """
+    limites = [-1] + difs + [min(len(a), len(b))]
+    mejor_inicio = mejor_longitud = 0
+
+    for k in range(1, len(limites)):
+        inicio = limites[k - 1] + 1
+        longitud = limites[k] - inicio
+
+        if longitud > mejor_longitud:
+            mejor_inicio = inicio
+            mejor_longitud = longitud
+
+    return mejor_inicio, mejor_longitud
+
+
+def punto4(wuhan, texas):
+    """Compara Wuhan 2019 contra Texas 2020."""
+    print("\nPunto 4: Wuhan (2019) vs Texas (2020):")
+    print(f"Longitud Wuhan: {len(wuhan)}  Longitud Texas: {len(texas)}")
+
+    difs = diferencias(wuhan, texas)
+    ubicadas = ubicar_proteinas_directas(wuhan)
+
+    print(f"Posiciones con diferencias: {len(difs)}")
+
+    for i in difs:
+        print(f"\nIndice (base 1): {i + 1}  Wuhan: {wuhan[i]}  Texas: {texas[i]}")
+
+        encontrada = False
+
+        for nombre, (inicio, fin) in ubicadas.items():
+            if inicio <= i < fin:
+                c = inicio + ((i - inicio) // 3) * 3
+                codon_w = wuhan[c:c + 3]
+                codon_t = texas[c:c + 3]
+                aa_w = CODONES[codon_w]
+                aa_t = CODONES[codon_t]
+
+                if aa_w == aa_t:
+                    efecto = "sinonima (mismo aminoacido)"
+                else:
+                    efecto = "CAMBIA el aminoacido"
+
+                print(f"  Proteina: {nombre}  (aminoacido {(c - inicio) // 3 + 1})")
+                print(f"  Codon Wuhan: {codon_w} -> {aa_w}")
+                print(f"  Codon Texas: {codon_t} -> {aa_t}")
+                print(f"  Efecto: {efecto}")
+                encontrada = True
+                break
+
+        if not encontrada:
+            print("  Fuera de las proteinas ubicadas (sin codon asociado)")
+
+    inicio, longitud = subcadena_comun_alineada(wuhan, texas, difs)
+
+    print("\nCadena mas larga sin diferencias:")
+    print(f"  Longitud: {longitud}")
+    print(f"  Indices (base 1): {inicio + 1}-{inicio + longitud}")
+    print(f"  Primeros 12 caracteres: {wuhan[inicio:inicio + 12]}")
+
+    if len(wuhan) != len(texas):
+        print(f"\nNota: las cadenas difieren en longitud por {abs(len(wuhan) - len(texas))} "
+              "bases al final del genoma; solo se compara la parte comun.")
+
+
 if __name__ == "__main__":
     genoma = leer_secuencia(GENOMA_WUHAN)
 
@@ -377,3 +499,4 @@ if __name__ == "__main__":
     punto1(genoma, secuencias)
     punto2(secuencias)
     punto3(genoma)
+    punto4(genoma, leer_secuencia(GENOMA_TEXAS))
