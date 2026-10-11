@@ -1,0 +1,216 @@
+Punto 1: indices de aparicion de cada gen en el genoma:
+Gen M: indices (inicio-fin, base 1) = [(26523, 27191)]
+  primeros 12 caracteres: ATGGCAGATTCC
+Gen S: indices (inicio-fin, base 1) = [(21563, 25384)]
+  primeros 12 caracteres: ATGTTTGTTTTT
+Gen ORF1AB: indices (inicio-fin, base 1) = [(266, 21555)]
+  primeros 12 caracteres: ATGGAGAGCCTT
+
+Punto 2: palindromo mas largo por gen:
+Gen M: longitud = 10, posicion (base 1) = 311-320
+Gen S: longitud = 16, posicion (base 1) = 1339-1354
+Gen ORF1AB: longitud = 20, posicion (base 1) = 5480-5499
+Guardado en palindromos.txt
+
+Punto 3: proteinas en el genoma:
+
+Proteina: QHD43415_1
+Indices (base 1): 266-805
+Marco de lectura: +2
+Primeros 4 aminoacidos: MESL
+Codones: ATGGAGAGCCTT
+
+Proteina: QHD43415_2
+Indices (base 1): 806-2719
+Marco de lectura: +2
+Primeros 4 aminoacidos: AYTR
+Codones: GCATACACTCGC
+
+Proteina: QHD43415_3
+Indices (base 1): 2720-8554
+Marco de lectura: +2
+Primeros 4 aminoacidos: APTK
+Codones: GCACCAACAAAG
+
+Proteina: QHD43415_4
+Indices (base 1): 8555-10054
+Marco de lectura: +2
+Primeros 4 aminoacidos: KIVN
+Codones: AAAATTGTTAAT
+
+Proteina: QHD43415_5
+Indices (base 1): 10055-10972
+Marco de lectura: +2
+Primeros 4 aminoacidos: SGFR
+Codones: AGTGGTTTTAGA
+
+Proteina: QHD43415_6
+Indices (base 1): 10973-11842
+Marco de lectura: +2
+Primeros 4 aminoacidos: SAVK
+Codones: AGTGCAGTGAAA
+
+Proteina: QHD43415_7
+Indices (base 1): 11843-12091
+Marco de lectura: +2
+Primeros 4 aminoacidos: SKMS
+Codones: TCTAAAATGTCA
+
+Proteina: QHD43415_8
+Indices (base 1): 12092-12685
+Marco de lectura: +2
+Primeros 4 aminoacidos: AIAS
+Codones: GCTATAGCCTCA
+
+Proteina: QHD43415_9
+Indices (base 1): 12686-13024
+Marco de lectura: +2
+Primeros 4 aminoacidos: NNEL
+Codones: AATAATGAGCTT
+
+Proteina: QHD43415_10
+Indices (base 1): 13025-13441
+Marco de lectura: +2
+Primeros 4 aminoacidos: AGNA
+Codones: GCTGGTAATGCA
+
+Proteina: QHD43415_11
+Indices (base 1): 13442-16236
+Marco de lectura: +2 a +1
+Cambio de reading frame: -1
+Cambio despues de 9 aminoacidos
+Primeros 4 aminoacidos: SADA
+Codones: TCAGCTGATGCA
+
+Proteina: QHD43415_12
+Indices (base 1): 16237-18039
+Marco de lectura: +1
+Primeros 4 aminoacidos: AVGA
+Codones: GCTGTTGGGGCT
+
+Proteina: QHD43415_13
+Indices (base 1): 18040-19620
+Marco de lectura: +1
+Primeros 4 aminoacidos: AENV
+Codones: GCTGAAAATGTA
+
+Proteina: QHD43415_14
+Indices (base 1): 19621-20658
+Marco de lectura: +1
+Primeros 4 aminoacidos: SLEN
+Codones: AGTTTAGAAAAT
+
+Proteina: QHD43415_15
+Indices (base 1): 20659-21552
+Marco de lectura: +1
+Primeros 4 aminoacidos: SSQA
+Codones: TCTAGTCAAGCG
+
+Proteina: QHD43416
+Indices (base 1): 21563-25381
+Marco de lectura: +2
+Primeros 4 aminoacidos: MFVF
+Codones: ATGTTTGTTTTT
+
+Proteina: QHD43417
+Indices (base 1): 25393-26217
+Marco de lectura: +1
+Primeros 4 aminoacidos: MDLF
+Codones: ATGGATTTGTTT
+
+Proteina: QHD43418
+Indices (base 1): 26245-26469
+Marco de lectura: +1
+Primeros 4 aminoacidos: MYSF
+Codones: ATGTACTCATTC
+
+Proteina: QHD43419
+Indices (base 1): 26523-27188
+Marco de lectura: +3
+Primeros 4 aminoacidos: MADS
+Codones: ATGGCAGATTCC
+
+Proteina: QHD43420
+Indices (base 1): 27202-27384
+Marco de lectura: +1
+Primeros 4 aminoacidos: MFHL
+Codones: ATGTTTCATCTC
+
+Proteina: QHD43421
+Indices (base 1): 27394-27756
+Marco de lectura: +1
+Primeros 4 aminoacidos: MKII
+Codones: ATGAAAATTATT
+
+Proteina: QHD43422
+Indices (base 1): 27894-28256
+Marco de lectura: +3
+Primeros 4 aminoacidos: MKFL
+Codones: ATGAAATTTCTT
+
+Proteina: QHD43423
+Indices (base 1): 28274-29530
+Marco de lectura: +2
+Primeros 4 aminoacidos: MSDN
+Codones: ATGTCTGATAAT
+
+Proteina: QHI42199
+Indices (base 1): 29558-29671
+Marco de lectura: +2
+Primeros 4 aminoacidos: MGYI
+Codones: ATGGGCTATATA
+
+Proteinas encontradas: 24/24
+
+Punto 4: Wuhan (2019) vs Texas (2020):
+Longitud Wuhan: 29903  Longitud Texas: 29882
+Posiciones con diferencias: 7
+
+Indice (base 1): 8782  Wuhan: C  Texas: T
+  Proteina: QHD43415_4  (aminoacido 76)
+  Codon Wuhan: AGC -> S
+  Codon Texas: AGT -> S
+  Efecto: sinonima (mismo aminoacido)
+
+Indice (base 1): 18603  Wuhan: T  Texas: C
+  Proteina: QHD43415_13  (aminoacido 188)
+  Codon Wuhan: CAT -> H
+  Codon Texas: CAC -> H
+  Efecto: sinonima (mismo aminoacido)
+
+Indice (base 1): 18975  Wuhan: T  Texas: A
+  Proteina: QHD43415_13  (aminoacido 312)
+  Codon Wuhan: GTT -> V
+  Codon Texas: GTA -> V
+  Efecto: sinonima (mismo aminoacido)
+
+Indice (base 1): 19175  Wuhan: A  Texas: C
+  Proteina: QHD43415_13  (aminoacido 379)
+  Codon Wuhan: GAT -> D
+  Codon Texas: GCT -> A
+  Efecto: CAMBIA el aminoacido
+
+Indice (base 1): 27925  Wuhan: C  Texas: T
+  Proteina: QHD43422  (aminoacido 11)
+  Codon Wuhan: ACA -> T
+  Codon Texas: ATA -> I
+  Efecto: CAMBIA el aminoacido
+
+Indice (base 1): 28144  Wuhan: T  Texas: C
+  Proteina: QHD43422  (aminoacido 84)
+  Codon Wuhan: TTA -> L
+  Codon Texas: TCA -> S
+  Efecto: CAMBIA el aminoacido
+
+Indice (base 1): 29095  Wuhan: C  Texas: T
+  Proteina: QHD43423  (aminoacido 274)
+  Codon Wuhan: TTC -> F
+  Codon Texas: TTT -> F
+  Efecto: sinonima (mismo aminoacido)
+
+Cadena mas larga sin diferencias:
+  Longitud: 9820
+  Indices (base 1): 8783-18602
+  Primeros 12 caracteres: CAGCGTGGTGGT
+
+Nota: las cadenas difieren en longitud por 21 bases al final del genoma; solo se compara la parte comun.

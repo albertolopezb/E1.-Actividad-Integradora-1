@@ -1,26 +1,28 @@
-# E1. Actividad Integradora 1 - Avance
+# E1. Actividad Integradora 1
 
-Analisis del genoma de SARS-CoV-2 (Wuhan 2019 vs Texas 2020) con algoritmos de strings implementados desde cero.
+Analisis del genoma de SARS-CoV-2 (Wuhan 2019 vs Texas 2020) con algoritmos de strings implementados desde cero (sin librerias de busqueda).
 
 ## Algoritmos utilizados
 | Punto | Algoritmo | Complejidad |
 |---|---|---|
-| 1. Indices de cada gen en el genoma | KMP (`kmp`, `tabla_fallo` en `genoma.py`) | O(n + m) |
-| 2. Palindromo mas largo por gen | Manacher (`palindromo_mas_largo`) | O(n) |
+| 1. Indices de cada gen en el genoma | KMP con arreglo LPS (clase 09) | O(n + m) |
+| 2. Palindromo mas largo por gen | Manacher adaptado a palindromos de ADN (complemento inverso) | O(n) |
+| 3. Ubicar cada proteina en el genoma | Tabla de codones + 6 marcos de lectura + KMP sobre aminoacidos; cambio de marco -1 para ORF1ab | O(n + p) por marco |
+| 4a. Diferencias Wuhan vs Texas | Comparacion posicion a posicion y traduccion del codon afectado | O(n) |
+| 4b. Cadena mas larga sin diferencias | Tramo mas largo entre diferencias (equivale a LCS cuando solo hay sustituciones) | O(n) |
 
-`prueba_rapida.py` valida ambos contra fuerza bruta (2000 casos aleatorios): **OK**.
+`lcs_dp` implementa longest common substring con programacion dinamica y dos arreglos (clase 09), O(n*m) tiempo y O(m) espacio. Se usa para validar el punto 4b. Con los genomas completos da el mismo resultado: 9820 bases, indices 8783-18602.
 
-## Que ya esta completo
-- Lectura automatica de los archivos (FASTA o texto plano).
-- **Punto 1**: busqueda de los genes M, S y ORF1AB en el genoma (indices y primeros 12 caracteres).
-- **Punto 2**: palindromo mas largo de cada gen, longitud mostrada y guardada en `palindromos.txt`.
-- Pruebas de correctitud de KMP y Manacher.
+## Resultados
+Ver `capturas/salida_programa.txt` (salida completa del programa) y `palindromos.txt`.
 
-## Que falta
-- **Punto 3**: ubicar en el genoma cada proteina de `seq-proteins.txt` (tabla de codones, traduccion en los 3 marcos de lectura, primeros 4 aminoacidos y codones).
-- **Punto 4**: comparar Wuhan vs Texas (indices con diferencias, codones/aminoacidos afectados, subcadena comun mas larga).
-- Capturas de pantalla de resultados con los archivos reales.
-- Reporte (PDF) y video.
+- Punto 1: M 26523-27191, S 21563-25384, ORF1AB 266-21555.
+- Punto 2: palindromo mas largo M = 10, S = 16, ORF1AB = 20.
+- Punto 3: 24/24 proteinas encontradas.
+- Punto 4: 7 diferencias (4 sinonimas, 3 que cambian el aminoacido); los genomas difieren ademas en 21 bases al final.
+
+## Pruebas
+`prueba_rapida.py` compara KMP, Manacher de ADN, LCS y el tramo sin diferencias contra fuerza bruta con casos aleatorios.
 
 ## Ejecucion
 Colocar los archivos de Teams en esta carpeta y correr:
@@ -28,6 +30,3 @@ Colocar los archivos de Teams en esta carpeta y correr:
 python genoma.py
 python prueba_rapida.py
 ```
-
-## Evidencia
-Capturas en la carpeta `capturas/`.

@@ -1,1 +1,2 @@
-OK: KMP y Manacher coinciden con fuerza bruta (2000 casos)
+OK: KMP y Manacher de ADN coinciden con fuerza bruta (2000 casos)
+OK: LCS y tramo sin diferencias coinciden con fuerza bruta (500 casos)
