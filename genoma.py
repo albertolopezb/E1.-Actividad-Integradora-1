@@ -438,13 +438,43 @@ def subcadena_comun_alineada(a, b, difs):
     return mejor_inicio, mejor_longitud
 
 
+def genomas_alineados(a, b, difs, ancla=30):
+    """Verifica que se puedan comparar a y b posicion a posicion. O(n).
+
+    Con KMP se busca el inicio y el final de b dentro de a: si aparecen en
+    las mismas coordenadas, no hay inserciones ni borrados que recorran los
+    indices. Ademas, las diferencias deben ser pocas (un indel intermedio
+    produciria diferencias en casi todas las posiciones siguientes).
+    """
+    corta = min(len(a), len(b))
+    inicio_ok = 0 in kmp(a[:corta], b[:ancla])
+    fin_ok = (corta - ancla) in kmp(a[:corta], b[corta - ancla:corta])
+    pocas = len(difs) < corta // 100
+
+    return inicio_ok and fin_ok and pocas
+
+
 def punto4(wuhan, texas):
     """Compara Wuhan 2019 contra Texas 2020."""
     print("\nPunto 4: Wuhan (2019) vs Texas (2020):")
     print(f"Longitud Wuhan: {len(wuhan)}  Longitud Texas: {len(texas)}")
 
     difs = diferencias(wuhan, texas)
+    alineados = genomas_alineados(wuhan, texas, difs)
+
+    if not alineados:
+        # Sin alineacion directa los indices no son comparables; solo se
+        # calcula la subcadena comun con LCS (programacion dinamica).
+        print("Los genomas no estan alineados posicion a posicion.")
+        longitud, fin = lcs_dp(wuhan, texas)
+        print(f"Cadena mas larga sin diferencias: {longitud} "
+              f"(Wuhan, base 1: {fin - longitud + 1}-{fin})")
+        return
+
+    print("Alineacion verificada con KMP (mismo inicio y mismo final, sin indels).")
+
     ubicadas = ubicar_proteinas_directas(wuhan)
+    cambios = 0
 
     print(f"Posiciones con diferencias: {len(difs)}")
 
@@ -465,6 +495,7 @@ def punto4(wuhan, texas):
                     efecto = "sinonima (mismo aminoacido)"
                 else:
                     efecto = "CAMBIA el aminoacido"
+                    cambios += 1
 
                 print(f"  Proteina: {nombre}  (aminoacido {(c - inicio) // 3 + 1})")
                 print(f"  Codon Wuhan: {codon_w} -> {aa_w}")
@@ -476,16 +507,42 @@ def punto4(wuhan, texas):
         if not encontrada:
             print("  Fuera de las proteinas ubicadas (sin codon asociado)")
 
+    # Bases que solo existen en el genoma mas largo (al final)
+    corta = min(len(wuhan), len(texas))
+
+    if len(wuhan) != len(texas):
+        larga, nombre_larga = (wuhan, "Wuhan") if len(wuhan) > len(texas) else (texas, "Texas")
+        extra = larga[corta:]
+        print(f"\nIndices (base 1) {corta + 1}-{len(larga)}: {len(extra)} bases solo en {nombre_larga}")
+        print(f"  Contenido: {extra}")
+
+        if extra == "A" * len(extra):
+            print("  Es la cola poly-A del final (solo cambia su largo)")
+
+        codificante = False
+        for inicio, fin in ubicadas.values():
+            if fin > corta:
+                codificante = True
+
+        if codificante:
+            print("  Afecta el final de una proteina")
+        else:
+            print("  Fuera de las proteinas: no hay codones ni aminoacidos afectados")
+
+    print(f"\nResumen: {len(difs)} sustituciones, {cambios} cambian el aminoacido, "
+          f"{len(difs) - cambios} son sinonimas")
+
     inicio, longitud = subcadena_comun_alineada(wuhan, texas, difs)
+    cadena = wuhan[inicio:inicio + longitud]
+
+    with open(os.path.join(DIR, "cadena_sin_diferencias.txt"), "w") as f:
+        f.write(cadena + "\n")
 
     print("\nCadena mas larga sin diferencias:")
     print(f"  Longitud: {longitud}")
-    print(f"  Indices (base 1): {inicio + 1}-{inicio + longitud}")
-    print(f"  Primeros 12 caracteres: {wuhan[inicio:inicio + 12]}")
-
-    if len(wuhan) != len(texas):
-        print(f"\nNota: las cadenas difieren en longitud por {abs(len(wuhan) - len(texas))} "
-              "bases al final del genoma; solo se compara la parte comun.")
+    print(f"  Indices (base 1, iguales en ambos genomas): {inicio + 1}-{inicio + longitud}")
+    print(f"  Primeros 12 caracteres: {cadena[:12]}")
+    print("  Guardada completa en cadena_sin_diferencias.txt")
 
 
 if __name__ == "__main__":

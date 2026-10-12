@@ -1,7 +1,7 @@
 """Pruebas rapidas: cada algoritmo se compara contra fuerza bruta."""
 import random
 from genoma import (kmp, palindromo_mas_largo, lcs_dp, diferencias,
-                    subcadena_comun_alineada)
+                    subcadena_comun_alineada, genomas_alineados)
 
 COMPLEMENTO = {"A": "T", "T": "A", "C": "G", "G": "C"}
 
@@ -53,3 +53,18 @@ for _ in range(500):
     assert longitud == lcs_dp(g1, g2)[0]
 
 print("OK: LCS y tramo sin diferencias coinciden con fuerza bruta (500 casos)")
+
+for _ in range(200):
+    # Verificacion de alineacion: sustituciones si, indels no
+    g1 = aleatoria(3000)
+    g2 = list(g1)
+    for k in random.sample(range(100, 2900), 5):
+        g2[k] = random.choice([c for c in "ACGT" if c != g1[k]])
+    g2 = "".join(g2)
+    assert genomas_alineados(g1, g2, diferencias(g1, g2))
+
+    # Mismo genoma con una base borrada a la mitad
+    g3 = g1[:1500] + g1[1501:]
+    assert not genomas_alineados(g1, g3, diferencias(g1, g3))
+
+print("OK: la verificacion de alineacion detecta indels (200 casos)")
