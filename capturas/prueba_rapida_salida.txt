@@ -1,2 +1,3 @@
 OK: KMP y Manacher de ADN coinciden con fuerza bruta (2000 casos)
 OK: LCS y tramo sin diferencias coinciden con fuerza bruta (500 casos)
+OK: la verificacion de alineacion detecta indels (200 casos)

@@ -164,6 +164,7 @@ Proteinas encontradas: 24/24
 
 Punto 4: Wuhan (2019) vs Texas (2020):
 Longitud Wuhan: 29903  Longitud Texas: 29882
+Alineacion verificada con KMP (mismo inicio y mismo final, sin indels).
 Posiciones con diferencias: 7
 
 Indice (base 1): 8782  Wuhan: C  Texas: T
@@ -208,9 +209,15 @@ Indice (base 1): 29095  Wuhan: C  Texas: T
   Codon Texas: TTT -> F
   Efecto: sinonima (mismo aminoacido)
 
+Indices (base 1) 29883-29903: 21 bases solo en Wuhan
+  Contenido: AAAAAAAAAAAAAAAAAAAAA
+  Es la cola poly-A del final (solo cambia su largo)
+  Fuera de las proteinas: no hay codones ni aminoacidos afectados
+
+Resumen: 7 sustituciones, 3 cambian el aminoacido, 4 son sinonimas
+
 Cadena mas larga sin diferencias:
   Longitud: 9820
-  Indices (base 1): 8783-18602
+  Indices (base 1, iguales en ambos genomas): 8783-18602
   Primeros 12 caracteres: CAGCGTGGTGGT
-
-Nota: las cadenas difieren en longitud por 21 bases al final del genoma; solo se compara la parte comun.
+  Guardada completa en cadena_sin_diferencias.txt
