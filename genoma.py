@@ -205,11 +205,11 @@ def marcos_lectura(genoma):
     return marcos
 
 
-def buscar_cambio_marco(genoma, proteina):
-    """Busca el cambio de reading frame -1 en ORF1ab."""
+def buscar_cambio_marco(genoma, proteina, inicio):
+    """Busca el cambio de reading frame -1 en ORF1ab.
 
-    # Inicio de QHD43415_11 en base cero
-    inicio = 13441
+    inicio (base cero) es donde termina la proteina anterior ya ubicada.
+    """
 
     for cambio in range(1, len(proteina)):
 
@@ -293,6 +293,7 @@ def punto3(genoma):
     marcos = marcos_lectura(genoma)
 
     total = 0
+    fin_anterior = None
     reverso = reverso_complementario(genoma)
 
     for nombre, proteina in proteinas.items():
@@ -338,12 +339,14 @@ def punto3(genoma):
 
                 encontrado = True
                 total += 1
+                fin_anterior = fin
                 break
 
         # Caso especial de ORF1ab
-        if not encontrado and nombre == "QHD43415_11":
+        if not encontrado and nombre == "QHD43415_11" and fin_anterior is not None:
 
-            resultado = buscar_cambio_marco(genoma, proteina)
+            # La proteina empieza donde termino la anterior
+            resultado = buscar_cambio_marco(genoma, proteina, fin_anterior)
 
             if resultado is not None:
                 inicio, fin, codones, cambio = resultado
@@ -358,6 +361,7 @@ def punto3(genoma):
 
                 encontrado = True
                 total += 1
+                fin_anterior = fin
 
         if not encontrado:
             print(f"\nProteina: {nombre}")
